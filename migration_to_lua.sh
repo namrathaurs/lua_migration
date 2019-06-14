@@ -1,4 +1,4 @@
-# Filename: automate.py 
+# Filename: migration_to_lua.sh 
 # Created by: Namratha Urs
 # Date of Creation: June 11, 2019
 

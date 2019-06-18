@@ -22,9 +22,13 @@ fi
 to_lua_script="tcl2lua.tcl"
 
 abs_path_to_file=$(readlink -f $1)
+#echo $abs_path_to_file
 filename=$(basename $abs_path_to_file)
+#echo $filename
 file_parentdir=$(dirname $abs_path_to_file)
+#echo $file_parentdir
 file_parent_dirname=$(basename $file_parentdir)
+#echo $file_parent_dirname
 
 if [ ! -d $2 ]
 then

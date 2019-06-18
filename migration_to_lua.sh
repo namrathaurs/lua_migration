@@ -25,13 +25,14 @@ set -e
 
 work_dir="/home/nvu0001/hpc_sandbox/lua_migration_testing"
 
-base="modulefiles"
+#base="modulefiles"
 #cd $src_dir
 
 if [ -z "`ls -A $src_dir`" ]
 then
 	echo "No modulefiles available for translation"
 	exit $ERRCODE
+fi
 
 # find all files recursively starting from the current directory, while ignoring hidden files (.version, specifically)
-find $src_dir -type f \( ! -iname ".*" \) -print -execdir $work_dir/translate.sh {} $tgt_dir/$base \;
+find $src_dir -type f \( ! -iname ".*" \) -print -execdir $work_dir/translate.sh {} $tgt_dir \;

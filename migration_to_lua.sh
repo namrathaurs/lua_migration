@@ -26,7 +26,6 @@ set -e
 work_dir="/home/nvu0001/hpc_sandbox/lua_migration_testing"
 
 #base="modulefiles"
-#cd $src_dir
 
 if [ -z "`ls -A $src_dir`" ]
 then
@@ -34,5 +33,7 @@ then
 	exit $ERRCODE
 fi
 
-# find all files recursively starting from the current directory, while ignoring hidden files (.version, specifically)
-find $src_dir -type f \( ! -iname ".*" \) -print -execdir $work_dir/translate.sh {} $tgt_dir \;
+#cd $src_dir
+
+#i find all files recursively starting from the current directory, while ignoring hidden files (.version, specifically)
+find $src_dir -type f \( ! -iname ".*" \) -print -execdir $work_dir/translate.sh {} $tgt_dir $src_dir \;

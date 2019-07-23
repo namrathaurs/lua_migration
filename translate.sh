@@ -21,24 +21,67 @@ fi
 
 to_lua_script="tcl2lua.tcl"
 
-abs_path_to_file=$(readlink -f $1)
-#echo $abs_path_to_file
-filename=$(basename $abs_path_to_file)
-#echo $filename
-file_parentdir=$(dirname $abs_path_to_file)
-#echo $file_parentdir
-file_parent_dirname=$(basename $file_parentdir)
-#echo $file_parent_dirname
-
 if [ ! -d $2 ]
 then
 	mkdir -p $2
 fi
-target_dir=$2/$file_parent_dirname
+
+# indexed array 'Dirs' is created
+declare -a DIRS
+#DIRS=( foo bar )
+
+#echo $1
+full_path=$(readlink -f $1)
+#echo $full_path
+#echo $2
+target_dir=$2
+#echo $3
+root_dir=$(basename $3)
+#echo $root_dir
+
+file=$(basename $full_path)
+temp=$(dirname $full_path)
+#echo $file
+#echo $temp
+DIRS=( $file "${DIRS[@]}" )
+
+while [ $(basename $temp) != $root_dir ]
+do
+	file=$(basename $temp)
+	temp=$(dirname $temp)
+	#echo ""
+	#echo $file
+	#echo $temp
+	DIRS=( $file "${DIRS[@]}" )
+	#echo $file, $temp
+done
+
+#echo ${DIRS[*]}
 
 if [ ! -d $target_dir ]
 then
 	mkdir -p $target_dir
 fi
- 
-tclsh $lmod_dir/$to_lua_script $abs_path_to_file > $target_dir/$filename.lua
+
+path=$target_dir
+counter=0
+for val in "${DIRS[@]}"
+do
+	arr_length=${#DIRS[@]}
+	#echo $arr_length
+	comp=$(( $arr_length - 1 ))
+	#echo $comp
+	if [ $counter -lt $comp ]
+	then
+		path=$path/$val
+		counter=$(( $counter + 1 ))
+	else	
+		#echo $path
+		#echo ""
+		mkdir -p $path	
+	tclsh $lmod_dir/$to_lua_script $full_path > $path/$val.lua
+	fi	
+done
+	
+
+

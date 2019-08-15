@@ -8,28 +8,22 @@ function check_user_groups (grp)
 	for s in string.gmatch(grp_info, "%S+") do
 		table.insert(out, s)
 	end
-	--LmodMessage("Lua code executed! ----- 1")
 	
 	for i=1,#out do
 		if out[i] ~= grp then
-			--LmodMessage("No")
+			-- if user group does not match the required group
 		do
 		end
 		elseif out[i] == grp then
+			--if user group matches the required group
 			flag = true
-			--LmodMessage("Yes")
 		end
 	end
-	--LmodMessage("Lua code executed! ----- 2")
 	
 	if not flag then
-		--LmodMessage("flag not set")
+		-- if flag is not set
 		LmodError(err_msg)
-		do return end
 		--break
+		do return end
 	end
-		--LmodMessage("Loading the module...")
-		--LmodMessage("Lua code executed! ----- 3")
-			
-	--else	
 end
